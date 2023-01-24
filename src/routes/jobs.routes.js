@@ -53,10 +53,11 @@ Router.patch("/:jobID", auth, async (req, res) => {
   try {
     let { jobID } = req.params;
     let { companyName, position, contract, location } = req.body;
-    let job = JobsModel.findOne({ _id: jobID });
+    let job = await JobsModel.findOne({ _id: jobID });
     if (!job) {
       return res.status(400).send({ status: false, message: "Some Error Occured !" });
     }
+
     job.companyName = companyName ?? job.companyName;
     job.position = position ?? job.position;
     job.contract = contract ?? job.contract;
